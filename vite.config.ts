@@ -59,7 +59,7 @@ export default defineConfig({
                 drop_debugger: true,
             },
         },
-        chunkSizeWarningLimit: 200, // 等效于 maxSize: 200000 (单位 KB)
+        chunkSizeWarningLimit: 800, // 单位 KB
         rollupOptions: {
             output: {
                 manualChunks: (id) => {
@@ -71,13 +71,10 @@ export default defineConfig({
                         if (id.includes('echarts')) {
                             return 'vendor-echarts';
                         }
-
-                        // 自动按包名切分 node_modules 中的模块
-                        const match = id.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
-                        if (match) {
-                            return `npm-${match[1].replace('@', '').replace('.', '').replace('/', '-')}`;
+                        if (id.includes('three')) {
+                            return 'vendor-three';
                         }
-                        return 'npm-vendors';
+                        return 'vendors';
                     }
                     return 'shared';
                 },
