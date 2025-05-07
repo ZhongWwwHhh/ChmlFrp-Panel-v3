@@ -1,6 +1,13 @@
 <template>
-  <n-menu style="text-align: left;" v-model:value="activeKey" :collapsed="collapsed" :collapsed-width="64"
-    :collapsed-icon-size="22" :options="computedMenuOptions" @update:value="handleUpdateValue" />
+    <n-menu
+        style="text-align: left"
+        v-model:value="activeKey"
+        :collapsed="collapsed"
+        :collapsed-width="64"
+        :collapsed-icon-size="22"
+        :options="computedMenuOptions"
+        @update:value="handleUpdateValue"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -17,18 +24,18 @@ const router = useRouter();
 const activeKey = ref(route.name as string);
 
 const handleUpdateValue = (key: string) => {
-  activeKey.value = key;
-  const targetOption = computedMenuOptions.value.find(option => option.key === key);
-  if (targetOption && typeof targetOption.label === 'function') {
-    const labelVNode = targetOption.label();
-    const props = labelVNode.props as Partial<Record<string, unknown>> & { to?: string };
-    if (props.to) {
-      router.push(props.to);
+    activeKey.value = key;
+    const targetOption = computedMenuOptions.value.find((option) => option.key === key);
+    if (targetOption && typeof targetOption.label === 'function') {
+        const labelVNode = targetOption.label();
+        const props = labelVNode.props as Partial<Record<string, unknown>> & { to?: string };
+        if (props.to) {
+            router.push(props.to);
+        }
     }
-  }
 };
 
 watch(route, () => {
-  activeKey.value = route.name as string;
+    activeKey.value = route.name as string;
 });
 </script>
