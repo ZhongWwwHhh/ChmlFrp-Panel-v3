@@ -37,7 +37,7 @@ You can use `esbenp.prettier-vscode` in VSCode
 #### Formatting Commands
 
 ```
-pnpm prettier --write .
+pnpm format
 ```
 
 ### Customize configuration
