@@ -17,7 +17,10 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version-file: 'package.json'
-                  cache: 'pnpm'
+
+            # Install pnpm
+            - name: Install pnpm
+              run: npm install -g pnpm
 
             # Install dependencies
             - name: Install dependencies
