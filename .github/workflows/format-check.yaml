@@ -1,0 +1,38 @@
+name: Prettier Check
+
+on:
+    pull_request:
+
+jobs:
+    prettier:
+        runs-on: ubuntu-latest
+
+        steps:
+            # Checkout the repository
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # Set up Node.js
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: 'package.json'
+
+            # Install pnpm
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+            # Install dependencies
+            - name: Install dependencies
+              run: pnpm install
+
+            # Run Prettier check
+            - name: Run Prettier check
+              run: |
+                  pnpm prettier --check . 2>&1 | tee prettier-output.txt
+                  if [ $? -ne 0 ]; then
+                    while IFS= read -r line; do
+                      echo "::error file=Prettier::${line}"
+                    done < prettier-output.txt
+                    exit 1
+                  fi
