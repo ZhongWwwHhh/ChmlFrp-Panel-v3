@@ -871,48 +871,6 @@ const editTunnel = (card: TunnelCard) => {
     editTunnelModal.value = true;
 };
 
-// 修改隧道apiv1
-const apiChangeTunnelV1 = async () => {
-    try {
-        const response = await axios.post(
-            'https://cf-v1.uapis.cn/api/cztunnel.php',
-            {
-                usertoken: userInfo?.usertoken,
-                userid: userInfo?.id,
-                type: formData.type.toLowerCase(),
-                node: formData.node,
-                name: formData.name,
-                ap: formData.ap,
-                // TCP或UDP隧道提交dorp为外网端口，HTTP或HTTPS隧道dorp为域名
-                dorp:
-                    formData.type.toLowerCase() === 'tcp' || formData.type.toLowerCase() === 'udp'
-                        ? formData.dorp
-                        : formData.domain,
-                localip: formData.localip,
-                nport: Number(formData.nport),
-                tunnelid: formData.tunnelid,
-                encryption: formData.encryption.toString(),
-                compression: formData.compression.toString(),
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        const data = response.data;
-        if (response.status === 200 && data.code === 200) {
-            message.success('隧道编辑成功');
-            return data;
-        } else {
-            message.error('隧道编辑失败: ' + data.error);
-        }
-    } catch (error) {
-        message.error('隧道编辑API请求失败:' + error);
-    }
-    return null;
-};
-
 // 修改隧道apiv2
 const apiChangeTunnelV2 = async () => {
     try {
