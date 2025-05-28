@@ -1155,9 +1155,7 @@ const determineTheChangeOfTheTunnel = async () => {
             }
             // 修改隧道
             try {
-                // apiv2似乎存在问题，返回“指定的端口不在允许的范围内”
-                // let err = await apiChangeTunnelV2()
-                let err = await apiChangeTunnelV1();
+                let err = await apiChangeTunnelV2();
 
                 if (err === null) {
                     // 回溯免费域名更改
@@ -1209,9 +1207,7 @@ const determineTheChangeOfTheTunnel = async () => {
         // 自定义域名
         else {
             try {
-                // apiv2似乎存在问题，返回“指定的端口不在允许的范围内”
-                // let err = await apiChangeTunnelV2()
-                let err = await apiChangeTunnelV1();
+                let err = await apiChangeTunnelV2();
                 err === null ? null : ((editTunnelModal.value = false), fetchTunnelCards());
             } catch (error) {
                 message.error('隧道编辑API调用失败:' + error);
